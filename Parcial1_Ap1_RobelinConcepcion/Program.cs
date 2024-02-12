@@ -1,4 +1,7 @@
+
+using Microsoft.EntityFrameworkCore;
 using Parcial1_Ap1_RobelinConcepcion.Components;
+using Parcial1_Ap1_RobelinConcepcion.DAL;
 
 namespace Parcial1_Ap1_RobelinConcepcion
 {
@@ -11,6 +14,11 @@ namespace Parcial1_Ap1_RobelinConcepcion
             // Add services to the container.
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
+
+            var ConStr = builder.Configuration.GetConnectionString("ConStr");
+
+            builder.Services.AddDbContext<Contexto>(options =>
+                       options.UseSqlite(ConStr));
 
             var app = builder.Build();
 
