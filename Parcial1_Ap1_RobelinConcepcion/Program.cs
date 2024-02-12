@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Parcial1_Ap1_RobelinConcepcion.Components;
 using Parcial1_Ap1_RobelinConcepcion.DAL;
+using Parcial1_Ap1_RobelinConcepcion.Service;
 
 namespace Parcial1_Ap1_RobelinConcepcion
 {
@@ -18,6 +19,8 @@ namespace Parcial1_Ap1_RobelinConcepcion
 
             builder.Services.AddDbContext<Contexto>(options =>
                        options.UseSqlite(ConStr));
+
+            builder.Services.AddScoped<MetaService>();
 
             var app = builder.Build();
 
