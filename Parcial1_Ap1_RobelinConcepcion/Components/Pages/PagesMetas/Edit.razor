@@ -1,0 +1,94 @@
+﻿@page "/EditMeta"
+@page "/EditMeta/{MetaId:int}"
+@inject MetaService metaservice
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+
+<PageTitle>Editor de Metas</PageTitle>
+
+<EditForm Model="meta" OnValidSubmit="Guardar">
+
+    <DataAnnotationsValidator />
+
+    <div class="card">
+        <div class="card-header">
+            <h2>Editar Meta</h2>
+        </div>
+        <div class="card-body">
+            <div class="row ">
+                <div class="col-3">
+                    <label>MetaId:</label>
+                    <InputNumber @bind-Value="meta.MetaId" class="id-input form-control"></InputNumber>
+                </div>
+                <div>
+                    <label>Fecha:</label>
+                    <InputDate @bind-Value="meta.Fecha" class="form-control"></InputDate>
+                </div>
+            </div>
+            <div>
+                <label>Descripci&oacute;n</label>
+                <InputText @bind-Value="meta.Descripción" class="form-control"></InputText>
+                <ValidationMessage For="@(() => meta.Descripción)" />
+            </div>
+            <div>
+                <label>Monto:</label>
+                <InputNumber @bind-Value="meta.Monto" class="form-control"></InputNumber>
+                <ValidationMessage For="@(() => meta.Monto)" />
+            </div>
+        </div>
+        <div class="card-footer">
+            <button type="button" class="btn btn-primary" @onclick="Atras">Volver </button>
+            <button type="submit" class="btn btn-success">Guardar < /></button>
+        </div>
+    </div>
+    <h3>@Mensaje</h3>
+</EditForm>
+
+@code {
+    [Parameter]
+    public int MetaId { get; set; }
+    public string Mensaje = " ";
+    public Metas meta { get; set; } = new Metas();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (MetaId > 0)
+        {
+            this.meta.MetaId = MetaId;
+            await this.Buscar();
+        }
+        meta.Fecha = DateTime.Now;
+    }
+    public async Task Buscar()
+    {
+        var metaEncontrada = await metaservice.Buscar(meta.MetaId);
+
+        if (metaEncontrada != null)
+        {
+            this.meta = metaEncontrada;
+        }
+    }
+    public async Task Guardar()
+    {
+        if (!await ValidarAsync())
+        {
+            return;
+        }
+        {
+            if (await metaservice.Guardar(this.meta))
+            {
+                Mensaje = "Sus datos han sido guardados correctamente.";
+                Atras();
+            }
+        }
+    }
+    async Task<bool> ValidarAsync()
+    {
+        bool esValido = true;
+        return esValido;
+    }
+    void Atras()
+    {
+        Navigation.NavigateTo("IndexMeta");
+    }
+}
