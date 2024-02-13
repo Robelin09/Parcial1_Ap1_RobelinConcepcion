@@ -1,0 +1,71 @@
+﻿@page "/DeleteMeta"
+@page "/DeleteMeta/{MetaId:int}"
+@inject MetaService metaservice
+@rendermode InteractiveServer
+@inject NavigationManager Navigation
+
+<div class="card">
+    <div class="card-header">
+        <h1>¿Desea Eliminar esta Meta?</h1>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Detalles de la Meta</h5>
+        <dl class="row">
+            <dt class="col-sm-3">MetaId:</dt>
+            <dd class="col-sm-9">@meta.MetaId</dd>
+
+            <dt class="col-sm-3">Fecha:</dt>
+            <dd class="col-sm-9">@meta.Fecha</dd>
+
+            <dt class="col-sm-3">Descripci&oacuten:</dt>
+            <dd class="col-sm-9">@meta.Descripción</dd>
+
+            <dt class="col-sm-3">Monto:</dt>
+            <dd class="col-sm-9">@meta.Monto</dd>
+
+        </dl>
+    </div>
+    <div class="card-footer">
+        <button type="button" class="btn btn-primary" @onclick="Atras">Volver </button>
+        <button type="button" class="btn btn-danger" @onclick="Eliminar">Eliminar</button>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int MetaId { get; set; }
+    public Metas meta { get; set; } = new Metas();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (MetaId > 0)
+        {
+            meta.MetaId = MetaId;
+            await this.Buscar();
+        }
+    }
+    public async Task Buscar()
+    {
+        var metaEncontrada = await metaservice.Buscar(meta.MetaId);
+
+        if (metaEncontrada != null)
+        {
+            this.meta = metaEncontrada;
+        }
+    }
+    public async Task Eliminar()
+    {
+        if (!await metaservice.Existe(meta.MetaId))
+        {
+            return;
+        }
+        if (await metaservice.Eliminar(this.meta))
+        {
+            Atras();
+        }
+    }
+    void Atras()
+    {
+        Navigation.NavigateTo("/IndexMeta");
+    }
+}
