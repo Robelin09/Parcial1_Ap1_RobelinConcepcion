@@ -20,6 +20,7 @@
                         <th>Monto</th>
                         <th>Editar</th>
                         <th>Eliminar</th>
+                        <th>Ver</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -32,6 +33,8 @@
                             <td>@meta.Monto.ToString("N2")</td>
                             <td><a href="/EditMeta/@meta.MetaId" class="bi bi-pencil-square"></a></td>
                             <td><a href="/DeleteMeta/@meta.MetaId" class="bi bi-trash"></a></td>
+                            <td><a href="/DetailsMeta/@meta.MetaId" class="bi bi-eye"></a></td>
+
                         </tr>
                     }               
                 </tbody>
