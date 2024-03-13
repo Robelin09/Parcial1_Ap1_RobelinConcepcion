@@ -1,12 +1,11 @@
-﻿@page "/DeleteMeta"
-@page "/DeleteMeta/{MetaId:int}"
+﻿@page "/DetailsMeta"
+@page "/DetailsMeta/{MetaId:int}"
 @inject MetaService metaservice
 @rendermode InteractiveServer
 @inject NavigationManager Navigation
-
 <div class="card">
     <div class="card-header">
-        <h1>¿Desea Eliminar esta Meta?</h1>
+        <h1>Detalles de Metas</h1>
     </div>
     <div class="card-body">
         <h5 class="card-title">Detalles de la Meta</h5>
@@ -27,7 +26,6 @@
     </div>
     <div class="card-footer">
         <button type="button" class="btn btn-outline-primary" @onclick="Atras">Volver <i class="bi bi-arrow-return-left" /></button>
-        <button type="button" class="btn btn-outline-danger" @onclick="Eliminar">Eliminar<i class="bi bi-trash" /></button>
     </div>
 </div>
 
@@ -51,17 +49,6 @@
         if (metaEncontrada != null)
         {
             this.meta = metaEncontrada;
-        }
-    }
-    public async Task Eliminar()
-    {
-        if (!await metaservice.Existe(meta.MetaId))
-        {
-            return;
-        }
-        if (await metaservice.Eliminar(this.meta))
-        {
-            Atras();
         }
     }
     void Atras()

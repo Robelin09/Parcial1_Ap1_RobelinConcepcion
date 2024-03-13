@@ -6,7 +6,7 @@
 <div class="card">
     <div class="card-header">
         <h3>Detalles de tus Metas</h3>
-        <a href="/CreateMeta" class="btn btn-primary">Añadir</a>
+        <a href="/CreateMeta" class="btn btn-outline-primary">Añadir</a>
     </div>
     <div class="card-body">      
         <br />
@@ -20,6 +20,7 @@
                         <th>Monto</th>
                         <th>Editar</th>
                         <th>Eliminar</th>
+                        <th>Ver</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -29,9 +30,11 @@
                             <td>@meta.MetaId</td>
                             <td>@meta.Fecha</td>
                             <td>@meta.Descripción</td>
-                            <td>@meta.Monto</td>
-                            <td><a href="/EditMeta/@meta.MetaId" >Editar</a></td>
-                            <td><a href="/DeleteMeta/@meta.MetaId">Eliminar</a></td>
+                            <td>@meta.Monto.ToString("N2")</td>
+                            <td><a href="/EditMeta/@meta.MetaId" class="bi bi-pencil-square"></a></td>
+                            <td><a href="/DeleteMeta/@meta.MetaId" class="bi bi-trash"></a></td>
+                            <td><a href="/DetailsMeta/@meta.MetaId" class="bi bi-eye"></a></td>
+
                         </tr>
                     }               
                 </tbody>
