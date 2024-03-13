@@ -29,7 +29,7 @@
                             <td>@meta.MetaId</td>
                             <td>@meta.Fecha</td>
                             <td>@meta.Descripción</td>
-                            <td>@meta.Monto</td>
+                            <td>@meta.Monto.ToString("N2")</td>
                             <td><a href="/EditMeta/@meta.MetaId" >Editar</a></td>
                             <td><a href="/DeleteMeta/@meta.MetaId">Eliminar</a></td>
                         </tr>
